@@ -43,38 +43,7 @@ _(Demo credentials: `demo@example.com` / `password123`)_
 
 ## Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Browser                              │
-│                                                             │
-│  Next.js 16 (App Router, 'use client')                      │
-│  ┌──────────────┐  ┌────────────────┐  ┌────────────────┐  │
-│  │  CalendarApp │  │ Zustand stores │  │ EventRepository│  │
-│  │  (root comp) │  │ auth / theme / │  │   interface    │  │
-│  │  MonthView   │  │ settings /     │  │                │  │
-│  │  WeekView    │  │ calendarList   │  │ LocalStorage   │  │
-│  │  DayView     │  └────────────────┘  │ Http (backend) │  │
-│  └──────────────┘                      └────────┬───────┘  │
-└───────────────────────────────────────────────── │ ─────────┘
-                                                   │ REST / JSON
-                                                   │ JWT in httpOnly cookie
-┌───────────────────────────────────────────────── │ ─────────┐
-│  Render (Node)                                   │          │
-│                                                  ▼          │
-│  Express 4                                                   │
-│  ┌──────────┐  ┌─────────────┐  ┌──────────────────────┐   │
-│  │  Routes  │→ │ Controllers │→ │      Services        │   │
-│  │ /auth    │  │             │  │ event / calendar /   │   │
-│  │ /events  │  │             │  │ auth                 │   │
-│  │/calendars│  └─────────────┘  └──────────┬───────────┘   │
-│  └──────────┘                              │               │
-│                                            ▼               │
-│                                      Prisma ORM            │
-└────────────────────────────────────────────┼───────────────┘
-                                             │
-                                             ▼
-                                    Neon PostgreSQL
-```
+![Architecture Diagram](https://drive.google.com/uc?export=view&id=1HYxLRgyXNK9OgMtz9P86tHOwcK2SSrGj)
 
 ### Key design decisions
 
