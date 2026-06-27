@@ -77,14 +77,22 @@ export const useAuthStore = create<AuthState>((set) => ({
       return;
     }
     try {
-      const res = await apiFetch('/auth/me');
-      if (res.ok) {
-        const user = await res.json() as AuthUser;
-        set({ user, bootstrapped: true });
-      } else {
-        set({ user: null, bootstrapped: true });
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 10_000); // 10s max
+      try {
+        const res = await apiFetch('/auth/me', { signal: controller.signal });
+        clearTimeout(timer);
+        if (res.ok) {
+          const user = await res.json() as AuthUser;
+          set({ user, bootstrapped: true });
+        } else {
+          set({ user: null, bootstrapped: true });
+        }
+      } finally {
+        clearTimeout(timer);
       }
     } catch {
+      // Network error or timeout — treat as logged-out, show auth page.
       set({ user: null, bootstrapped: true });
     }
   },
