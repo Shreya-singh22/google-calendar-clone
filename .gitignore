@@ -10,6 +10,13 @@
 !.yarn/releases
 !.yarn/versions
 
+# api — backend dependencies, build output, local DB
+api/node_modules/
+api/dist/
+api/prisma/dev.db
+api/prisma/dev.db-journal
+api/.env
+
 # testing
 /coverage
 

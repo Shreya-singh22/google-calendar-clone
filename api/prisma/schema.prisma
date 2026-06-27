@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Default: SQLite for local dev. For production, change provider to
+  // "postgresql" and set DATABASE_URL to a Postgres connection string.
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String     // bcrypt hash — never returned to clients
+  name      String?
+  calendars Calendar[]
+  events    Event[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Calendar {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  colorId   String
+  visible   Boolean  @default(true)
+  kind      String   @default("user")   // "user" | "holiday"
+  country   String?                      // ISO-3166-1 alpha-2, e.g. "IN" (holiday kind only)
+  readOnly  Boolean  @default(false)
+  events    Event[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Event {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  calendarId       String
+  calendar         Calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+  title            String
+  description      String?
+  location         String?
+  startUtc         DateTime
+  endUtc           DateTime
+  allDay           Boolean  @default(false)
+  colorId          String
+
+  // Recurrence (RFC 5545 RRULE, set only on master events)
+  rrule            String?
+  // Points to the master event id for exception/override rows
+  recurringEventId String?
+  // Which occurrence this exception replaces (ISO UTC string)
+  originalStartUtc String?
+  // True for single-instance override rows
+  isException      Boolean  @default(false)
+  // JSON array of ISO UTC strings — occurrences explicitly excluded from recurrence
+  exDatesJson      String   @default("[]")
+
+  deletedAt DateTime?   // null = live event; soft-delete sets this
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, startUtc, endUtc])
+  @@index([recurringEventId])
+  @@index([userId, deletedAt])
+}

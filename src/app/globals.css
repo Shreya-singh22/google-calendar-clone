@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ── Class-based dark mode (overrides Tailwind's media default) ──────────── */
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Light (default) */
+:root {
+  --background: #ffffff;
+  --foreground: #3c4043;
+}
+
+/* Applied when .dark is on <html> */
+.dark {
+  --background: #202124;
+  --foreground: #e8eaed;
+}
+
+/* ── Base ─────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Custom scrollbar ─────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #dadce0;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #bdc1c6;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #5f6368;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #80868b;
+}
+
+/* ── Smooth transitions on interactive elements ────── */
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* ── Event chip drag cursor ────────────────────────── */
+[data-dragging="true"] {
+  cursor: grabbing !important;
+}
+
+/* ── Print styles ──────────────────────────────────── */
+@media print {
+  /* Hide all chrome — only the calendar grid prints */
+  header,
+  aside,
+  [data-no-print],
+  .fixed,
+  button:not([data-print-visible]) {
+    display: none !important;
+  }
+
+  html, body {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  main {
+    overflow: visible !important;
+  }
+
+  /* Ensure light background for print */
+  * {
+    background-color: white !important;
+    color: black !important;
+    border-color: #dadce0 !important;
+  }
+
+  /* Keep event colors visible */
+  [style*="background-color"] {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
