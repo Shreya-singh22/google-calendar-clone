@@ -105,10 +105,13 @@ export function EventEditor({ initialData, calendars: calendarsProp, onClose, on
         onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
       >
         <motion.div
-          className="w-full max-w-lg bg-white dark:bg-[#2d2e31] rounded-2xl shadow-2xl overflow-hidden"
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          className="w-full max-w-lg bg-white dark:bg-[#2d2e31] shadow-2xl overflow-hidden
+            md:rounded-2xl
+            fixed inset-x-0 bottom-0 rounded-t-2xl max-h-[95dvh]
+            md:static md:inset-auto md:max-h-none"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 60 }}
           transition={{ type: 'spring', stiffness: 380, damping: 30 }}
         >
           {/* Color accent */}
@@ -125,7 +128,7 @@ export function EventEditor({ initialData, calendars: calendarsProp, onClose, on
           </div>
 
           {/* Form */}
-          <div className="px-6 py-5 space-y-5 max-h-[70vh] overflow-y-auto">
+          <div className="px-6 py-5 space-y-5 overflow-y-auto max-h-[70dvh]">
             {/* Title */}
             <input
               type="text"

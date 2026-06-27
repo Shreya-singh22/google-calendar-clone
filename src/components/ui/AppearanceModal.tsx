@@ -26,15 +26,15 @@ export function AppearanceModal({ open, onClose }: AppearanceModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4"
           onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
         >
           <motion.div
-            initial={{ scale: 0.95, opacity: 0, y: 16 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0, y: 16 }}
+            initial={{ y: 60, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 60, opacity: 0 }}
             transition={{ duration: 0.2, type: 'spring', stiffness: 380, damping: 30 }}
-            className="bg-white dark:bg-[#2d2e31] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 w-full max-w-sm overflow-hidden"
+            className="bg-white dark:bg-[#2d2e31] rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 w-full sm:max-w-sm overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-700">

@@ -11,6 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Google Calendar Clone",
   description: "A high-fidelity Google Calendar clone with Month, Week, and Day views",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 
 export default function RootLayout({

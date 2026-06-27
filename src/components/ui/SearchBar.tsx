@@ -77,7 +77,7 @@ export function SearchBar({ open, onClose, onEventSelect }: SearchBarProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm flex items-start justify-center pt-20"
+          className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm flex items-start justify-center sm:pt-20"
           onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
         >
           <motion.div
@@ -85,7 +85,7 @@ export function SearchBar({ open, onClose, onEventSelect }: SearchBarProps) {
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: -16, scale: 0.97, opacity: 0 }}
             transition={{ duration: 0.18, type: 'spring', stiffness: 420, damping: 32 }}
-            className="bg-white dark:bg-[#2d2e31] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 w-full max-w-lg mx-4 overflow-hidden"
+            className="bg-white dark:bg-[#2d2e31] sm:rounded-2xl shadow-2xl border-b sm:border border-gray-100 dark:border-gray-700 w-full sm:max-w-lg overflow-hidden"
           >
             {/* Search input */}
             <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 dark:border-gray-700">

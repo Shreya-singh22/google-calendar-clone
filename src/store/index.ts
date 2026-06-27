@@ -36,7 +36,7 @@ const DEFAULT_CALENDARS = {
 export const useCalendarStore = create<CalendarState>((set) => ({
   currentDate: new Date().toISOString(), // Start with today
   view: 'month', // Default to month view
-  sidebarOpen: true,
+  sidebarOpen: typeof window !== 'undefined' ? window.innerWidth >= 768 : true,
   selectedCalendars: DEFAULT_CALENDARS,
 
   selectedEventId: null,

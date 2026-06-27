@@ -34,21 +34,35 @@ export function Sidebar({ onCreateClick }: SidebarProps) {
     color: CALENDAR_COLORS[c.colorId as ColorId] ?? CALENDAR_COLORS.Sage,
   }));
 
+  const closeSidebar = () => useCalendarStore.getState().setSidebarOpen(false);
+
   return (
     <AnimatePresence>
       {sidebarOpen && (
-        <motion.aside
-          initial={{ width: 0, opacity: 0 }}
-          animate={{ width: 256, opacity: 1 }}
-          exit={{ width: 0, opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-[#202124] shrink-0 h-full flex flex-col overflow-hidden"
-        >
-          <div className="flex flex-col h-full overflow-y-auto py-4" style={{ width: 256 }}>
+        <>
+          {/* Mobile backdrop */}
+          <motion.div
+            className="fixed inset-0 z-40 bg-black/40 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={closeSidebar}
+          />
+
+          <motion.aside
+            initial={{ x: -256, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -256, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="fixed inset-y-0 left-0 z-50 md:relative md:inset-auto md:z-auto border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-[#202124] shrink-0 h-full flex flex-col overflow-hidden"
+          >
+          <div className="flex flex-col h-full overflow-y-auto py-4 w-64">
             {/* Create button */}
             <div className="px-4 mb-5">
               <button
-                onClick={onCreateClick}
+                type="button"
+                onClick={() => { onCreateClick?.(); closeSidebar(); }}
                 className="group flex items-center gap-2 pl-3 pr-5 py-3 rounded-2xl shadow-md hover:shadow-lg active:shadow-sm
                   bg-white dark:bg-[#2d2e31] border border-gray-200 dark:border-gray-700
                   text-sm font-medium text-gray-700 dark:text-gray-200
@@ -104,7 +118,8 @@ export function Sidebar({ onCreateClick }: SidebarProps) {
               </div>
             )}
           </div>
-        </motion.aside>
+          </motion.aside>
+        </>
       )}
     </AnimatePresence>
   );

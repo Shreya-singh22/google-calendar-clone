@@ -32,7 +32,8 @@ export function TopBar({
   onAppearanceOpen,
   onPrintClick,
 }: TopBarProps) {
-  const { toggleSidebar, currentDate, view, setView, setCurrentDate } = useCalendarStore();
+  const { toggleSidebar, setSidebarOpen, currentDate, view, setView, setCurrentDate } = useCalendarStore();
+  const closeSidebarOnMobile = () => { if (window.innerWidth < 768) setSidebarOpen(false); };
   const { user, logout } = useAuthStore();
   const dateObj = new Date(currentDate);
 
@@ -242,7 +243,7 @@ export function TopBar({
                   <button
                     type="button"
                     key={v}
-                    onClick={() => { setView(v); setViewMenuOpen(false); }}
+                    onClick={() => { setView(v); setViewMenuOpen(false); closeSidebarOnMobile(); }}
                     className={`w-full text-left px-4 py-2.5 text-sm transition-colors
                       ${view === v
                         ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
