@@ -2,7 +2,7 @@
 
 A full-stack Google Calendar clone built with Next.js 16, Express, Prisma, and PostgreSQL. Supports multi-calendar management, recurring events, dark mode, offline-first fallback, and is fully deployed on Vercel + Render + Neon.
 
-**Live demo:** https://google-calendar-clone-iota.vercel.app
+**Live demo:** [https://google-calendar-clone-iota.vercel.app](https://google-calendar-clone-iota.vercel.app)
 _(Demo credentials: `demo@example.com` / `password123`)_
 
 ---
@@ -43,7 +43,9 @@ _(Demo credentials: `demo@example.com` / `password123`)_
 
 ## Architecture Overview
 
-![Architecture Diagram](https://drive.google.com/uc?export=view&id=1HYxLRgyXNK9OgMtz9P86tHOwcK2SSrGj)
+[![Architecture Diagram](https://drive.google.com/uc?export=view&id=1HYxLRgyXNK9OgMtz9P86tHOwcK2SSrGj)](https://drive.google.com/file/d/1HYxLRgyXNK9OgMtz9P86tHOwcK2SSrGj/view?usp=sharing)
+
+_[View full diagram →](https://drive.google.com/file/d/1HYxLRgyXNK9OgMtz9P86tHOwcK2SSrGj/view?usp=sharing)_
 
 ### Key design decisions
 
